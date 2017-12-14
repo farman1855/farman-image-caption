@@ -1,3 +1,4 @@
+import numpy.core.multiarray
 import matplotlib.pyplot as plt
 from random import shuffle
 from convfeatures import *
