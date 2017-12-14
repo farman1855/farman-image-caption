@@ -3,8 +3,8 @@ import pandas as pd
 import numpy as np
 
 
-path_to_reference = 'Dataset/Validation_Captions.txt' # df -> image_id:str     caption:str     len(5000)
-path_to_model = 'model/Decoder/Generated_Captions.txt'
+path_to_reference = '/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/Dataset/Validation_Captions.txt' # df -> image_id:str     caption:str     len(5000)
+path_to_model = '/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/model/Decoder/Generated_Captions.txt'
 
 with open(path_to_model) as f:
   model_data = f.readlines()
