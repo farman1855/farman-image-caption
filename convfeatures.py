@@ -3,14 +3,14 @@ import numpy as np
 import os
 
 batch_size = 10
-img_path = "Dataset/flickr30k-images/"
+img_path = "/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/Dataset/flickr30k-images/"
 try:
-    files = sorted(np.array(os.listdir("Dataset/flickr30k-images/")))
+    files = sorted(np.array(os.listdir("/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/Dataset/flickr30k-images/")))
     n_batch = len(files) / batch_size
 except:
     pass
 
-with open('ConvNets/inception_v4.pb', 'rb') as f:
+with open('/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/ConvNets/inception_v4.pb', 'rb') as f:
     fileContent = f.read()
 
 graph_def = tf.GraphDef()
@@ -112,7 +112,7 @@ def forward_pass(io):
     print "Progress:" + str(((n_batch) / float(n_batch) * 100)) + "%\n"
     print
     print "Saving Features : features.npy\n"
-    np.save('Dataset/features', prob)
+    np.save('/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/Dataset/features', prob)
 
 
 def get_features(sess, io, img, saveencoder=False):
@@ -124,11 +124,11 @@ def get_features(sess, io, img, saveencoder=False):
 
     if saveencoder:
         tensors = [n.name for n in sess.graph.as_graph_def().node]
-        with open("model/Encoder/Encoder_Tensors.txt", 'w') as f:
+        with open("/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/model/Encoder/Encoder_Tensors.txt", 'w') as f:
             for t in tensors:
                 f.write(t + "\n")
         saver = tf.train.Saver()
-        saver.save(sess, "model/Encoder/model.ckpt")
+        saver.save(sess, "/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/model/Encoder/model.ckpt")
     return prob
 
 if __name__ == "__main__":
