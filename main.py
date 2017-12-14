@@ -49,8 +49,8 @@ args = parser.parse_args()
 config = Configuration(vars(args))
 
 if config.mode == "train":
-    caption_file = 'Dataset/results_20130124.token'
-    feature_file = 'Dataset/features.npy'
+    caption_file = '/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/Dataset/results_20130124.token'
+    feature_file = '/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/Dataset/features.npy'
     vocab, wtoidx, training_data = generate_captions(
         config.word_threshold, config.max_len, caption_file, feature_file)
     features, captions = training_data[:, 0], training_data[:, 1]
@@ -75,7 +75,7 @@ elif config.mode == "eval":
         features = np.load(args.validation_data)
         #with open("Dataset/Validation_Captions.txt") as f:
         #    data = f.readlines()
-        with open("Dataset/image_info_test2014.json",'r') as f:
+        with open("/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/Dataset/image_info_test2014.json",'r') as f:
             data=json.load(f)
 
         #filenames = [caps.split('\t')[0].split('#')[0] for caps in data]
