@@ -10,7 +10,7 @@ try:
 except:
     pass
 
-with open('ConvNets/inception_v4.pb', 'rb') as f:
+with open('/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/ConvNets/inception_v4.pb', 'rb') as f:
     fileContent = f.read()
 
 graph_def = tf.GraphDef()
