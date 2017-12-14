@@ -7,8 +7,8 @@ import skimage.transform
 import os
 import matplotlib.pyplot as plt
 
-img_path = "Dataset/flickr30k-images/"
-files = sorted(np.array(os.listdir("Dataset/flickr30k-images/")))
+img_path = "/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/Dataset/flickr30k-images/"
+files = sorted(np.array(os.listdir("/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/Dataset/flickr30k-images/")))
 
 batch_size = 10
 n_batch = len(files) / batch_size
@@ -77,7 +77,7 @@ def forward_pass():
     print "Progress:" + str(((n_batch) / float(n_batch) * 100)) + "%\n"
     print
     print "Saving Features : featuresVGG.npy\n"
-    np.save('Dataset/featuresVGG', prob)
+    np.save('/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/Dataset/featuresVGG', prob)
 
 
 def get_features(path):
