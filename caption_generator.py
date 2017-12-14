@@ -38,23 +38,23 @@ class Caption_Generator():
             print "Converting Captions to IDs"
             self.captions = self.Words_to_IDs(self.wtoidx, self.captions)
             if self.resume == 1:
-                self.vocab = np.load("Dataset/vocab.npy").tolist()
-                self.wtoidx = np.load("Dataset/wordmap.npy").tolist()
+                self.vocab = np.load("/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/Dataset/vocab.npy").tolist()
+                self.wtoidx = np.load("/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/Dataset/wordmap.npy").tolist()
 
         self.current_epoch = 0
         self.current_step = 0
         if self.resume is 1 or self.mode == 'test':
-            if os.path.isfile('model/save.npy'):
+            if os.path.isfile('/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/model/save.npy'):
                 self.current_epoch, self.current_step = np.load(
-                    "model/save.npy")
+                    "/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/model/save.npy")
             else:
                 print "No Checkpoints, Restarting Training.."
                 self.resume = 0
         self.nb_epochs = config.nb_epochs
 
         if self.mode == 'test':
-            self.vocab = np.load("Dataset/vocab.npy").tolist()
-            self.wtoidx = np.load("Dataset/wordmap.npy").tolist()
+            self.vocab = np.load("/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/Dataset/vocab.npy").tolist()
+            self.wtoidx = np.load("/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/Dataset/wordmap.npy").tolist()
             self.max_words = np.int(len(self.wtoidx))
             self.idxtow = dict(zip(self.wtoidx.values(), self.wtoidx.keys()))
             self.model()
@@ -232,7 +232,7 @@ class Caption_Generator():
                 predicted_next_idx = tf.cast(predicted_next_idx, tf.int32, name="word_"+str(i))
                 IDs.append(predicted_next_idx)
 
-        with open("model/Decoder/DecoderOutputs.txt", 'w') as f:
+        with open("/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/model/Decoder/DecoderOutputs.txt", 'w') as f:
             for name in IDs:
                 f.write(name.name.split(":0")[0] + "\n")
 
@@ -262,7 +262,7 @@ class Caption_Generator():
                 print "Loading Previously Trained Model"
                 print self.current_epoch, "Out of", self.nb_epochs, "Completed in previous run."
                 try:
-                    ckpt_file = "./model/model.ckpt-" + str(self.current_step)
+                    ckpt_file = "/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/model/model.ckpt-" + str(self.current_step)
                     saver.restore(sess, ckpt_file)
                     print "Resuming Training"
                 except Exception as e:
@@ -270,7 +270,7 @@ class Caption_Generator():
                     print "Checkpoints not found"
                     sys.exit(0)
             writer = tf.summary.FileWriter(
-                "model/log_dir/", graph=tf.get_default_graph())
+                "/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/model/log_dir/", graph=tf.get_default_graph())
 
             for epoch in range(self.current_epoch, self.nb_epochs):
                 loss=[]
@@ -293,12 +293,12 @@ class Caption_Generator():
                 print
                 print "Epoch: ", epoch, "\tAverage Loss: ", np.mean(loss)
                 print "\nSaving Model..\n"
-                saver.save(sess, "./model/model.ckpt", global_step=global_step)
-                np.save("model/save", (epoch, step))
+                saver.save(sess, "/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/model/model.ckpt", global_step=global_step)
+                np.save("/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/model/save", (epoch, step))
 
     def init_decode(self):
         saver = tf.train.Saver()
-        ckpt_file = "./model/model.ckpt-" + str(self.current_step) #str(89994)
+        ckpt_file = "/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/model/model.ckpt-" + str(self.current_step) #str(89994)
         sess = tf.Session()
         init = tf.global_variables_initializer()
         sess.run(init)
@@ -317,22 +317,22 @@ class Caption_Generator():
             plt.axis("off")
             plt.title(sentence, fontsize='10', loc='left')
             name=path.split("/")[-1]
-            plt.savefig("./results/"+"gen_"+name)
+            plt.savefig("/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/results/"+"gen_"+name)
             plt.show()
         else:
             print sentence
         if self.savedecoder:
             saver = tf.train.Saver()
-            saver.save(self.sess, "model/Decoder/model.ckpt")
+            saver.save(self.sess, "/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/model/Decoder/model.ckpt")
 
         #return path, sentence
 
     def batch_decoder(self, filenames, features):
         saver = tf.train.Saver()
-        ckpt_file = "./model/model.ckpt-" + str(self.current_step)
+        ckpt_file = "/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/model/model.ckpt-" + str(self.current_step)
         sentences = []
         filenames = np.unique(filenames)
-        with open("model/Decoder/Generated_Captions.txt", 'w') as f:
+        with open("/gpfs/fs01/user/s076-844c78348e985f-04662317cedd/notebook/work/model/Decoder/Generated_Captions.txt", 'w') as f:
             with tf.Session() as sess:
                 init = tf.global_variables_initializer()
                 sess.run(init)
